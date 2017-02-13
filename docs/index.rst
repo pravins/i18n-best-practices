@@ -14,6 +14,8 @@ Contents:
    introduction
    basics-of-i18n
    imp-points-for-i18n
+   l10n-string-extraction-frameworks
+   i18n-of-c-application
 
 
 
