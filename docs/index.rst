@@ -13,6 +13,7 @@ Contents:
 
    introduction
    basics-of-i18n
+   imp-points-for-i18n
 
 
 
