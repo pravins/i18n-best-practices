@@ -257,3 +257,79 @@ Unicode CLDR
 ============
 
 The term CLDR stands for common locale data repository and it provides key building blocks to support world languages in software. After first release in 2003 in present stage Unicode CLDR has became huge repository for World languages and its growing and growing. Unicode CLDR has been already used and supported by major software companies including Apple, Google, IBM and Microsoft.
+
+CLDR is collaborative efforts of different domain experts. Various countries governments are part of it and many fields get finalized based on votes of members.
+
+Unicode CLDR is even much bigger and has more information for each locales.
+
+Locale Code
+===========
+
+Typically locales are available in langcode_countrycode format. (en_US). 
+
+**Why is so combination?**
+
+Many languages are spoken in different countries. Though the languages are same few things are different from country perspective. Like different sorting, different Date/Time format and many more. To handle this differences it is important to have different locale as per lang and country code.
+
+Example:
+
+- bn_IN and bn_BD Bengali language locale for India and Bangladesh.
+
+Language codes are standardized under ISO 639-1 standard. Earlier 2 digit codes were assigned to each language but since 2 digits were insufficient to provide code for all languages in ISO 639-2 languages are represented with 3 digit code.
+
+The rule used while adding locale in glibc is - if language does not have 2 digit code then create locale with 3 digit code.
+
+Currency format
+===============
+
+Few countries using “,” as a separator while other are using either “.” or simply space.
+
+- US and India Format - 1,234,567.89
+  
+- German Format - 1.234.567,89
+  
+- French Format - 1 234 567,89
+
+Date/Time format
+================
+
+Its depends how you write date. Whether yyyy-mm-dd format or start with date first then month and then year. Dd-mm-yyyy.
+
+- India - dd-mm-yyyy
+
+- USA - yyyy-mm-dd
+
+Collation
+=========
+
+Sorting has been remained an interesting topic of research over the time. Sorting varies across countries.
+
+- Few regions like to Caps first then small. A-Z followed by a-z
+
+- Few regions like SMALL and CAPS letter together. Aa Bb etc.
+
+Sorting affect significantly day to day work. Everywhere data represented in sorted order.
+
+Input methods
+*************
+
+Unlike English language, For many languages there any many characters than the number of keys available on a keyboard. To get all these characters of particular language, one need to use different key combination of modifiers to get those characters.
+
+Example:
+
+- As of Unicode 9.0, Unicode defines a total of 80,388 CJK Unified Ideographs.
+  
+- In Devanagari script - 256 characters are presently
+
+To get required characters from keyboard, software need add-on intelligence. Input methods provide drivers and keymaps to get characters for these complex scripts.
+
+.. figure:: _static/keyboard_layout_chinese_traditional.png
+   :width: 600 px
+   :target: _static/keyboard_layout_chinese_traditional.png
+   :align: center
+   :alt: Keyboard layout Chinese traditional
+
+   Keyboard layout Chinese traditional
+
+Input methods also available from platform and also over the year many input methods available on web. Website developers sometime uses online Input method in their applications to avoid dependencies on platforms.
+
