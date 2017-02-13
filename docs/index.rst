@@ -11,7 +11,6 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   index
    introduction
    basics-of-i18n
 

@@ -1,6 +1,5 @@
-============
 Introduction
-============
+############
 
 Internationalization is not a new concept. From the time computer has invented thoughts were started regarding removing language barriers from it and making it usable for the whole world. Its general phenomenon as more and more people start using particular products, more ideas start getting generating on further better usage of product and further innovation around that product.
 
@@ -17,9 +16,9 @@ Localization (a.k.a l10n)
 Globalization (aka g11n)
         There are numerous definition of globalization in different context. Internationalization and Localization together forms software globalization. This is more kind a strategy for launching i18n & l10n product into new market.
 
-----------------------------
+
 Need of Internationalization
-----------------------------
+****************************
 
 Out of the entire world population 7+billion, only 341M people have English as their first language. Importance of English in global economies has increased number of fluent English speaker significantly. But one should note that, English is their second language. Major part of world still expect computing in there own language and script.
 
@@ -32,5 +31,10 @@ Out of the entire world population 7+billion, only 341M people have English as t
    World regional languages
 
 This is described in more details in talk "Why globalization? World wide picture?”
+
+Why globalizatoin? World wide picture
+=====================================
+
+Add information here from talk.
 
 .. TODO: We can add details from the presentation to this book.

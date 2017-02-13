@@ -1,6 +1,5 @@
-==============================
 Basics of Internationalization
-==============================
+##############################
 
 Internationalization can be further divided into two types. It is core internationalization and application internationalization.
 
@@ -29,7 +28,7 @@ If one asked things that has helped to language computing world over the year, w
 Just imagine how it’s difficult to get consensus. Thanks to all efforts that has been done by various companies and standardization organization for many year for getting consensus and developing standards suitable for all.
 
 Encoding
---------
+********
 
 Computer deals with binary !!
 
@@ -63,7 +62,7 @@ Have you seen how does encoding issues looks like?
 Above image is nothing but the typical example, where your data is created with different encoding but viewed or wrongly converted to incompatible encoding. Whenever one see this, first thing to check your encoding related stuff.
 
 Unicode and ISO
-,,,,,,,,,,,,,,,
+===============
 
 Incorporated in January, 1991 Unicode Consortium started to work on resolving problem of many encoding standards and incompatibility while transferring data from one computer to other.
 
@@ -109,8 +108,7 @@ Insert Table
 
 - This is more expensive for Asian script specifically in the range U+0800- U+FFFF since it takes 2 to 3 Bytes.
 
-- One always wonders why to use multi-byte encoding when we can use either UTF-16 or UTF-32 directly but UTF16/UTF32 are easy for computation but are not efficient for
-storage.
+- One always wonders why to use multi-byte encoding when we can use either UTF-16 or UTF-32 directly but UTF16/UTF32 are easy for computation but are not efficient for storage.
 
 - UTF-8 is a more popular encoding of Unicode and widely used than ASCII.
 
@@ -129,12 +127,12 @@ following information
 -  - UTF16 (BE) - 0xFE 0xFF
 
 Other Encodings
-...............
+===============
 
 Though Unicode has became de-facto standard still some countries have mandated use of there custom standards. Following are the some list.
 
 SJIS
-,,,,
+----
 
 Shift Japanese Industrial Standards
 
@@ -142,13 +140,13 @@ Shift Japanese Industrial Standards
 
 
 Fonts
------
+*****
 
 How does your computer or any other digital device will looks without fonts?
 
-.. figure:: _static/text-without-fonts,png
+.. figure:: _static/text-without-fonts.png
    :width: 600 px
-   :target: _static/text-without-fonts,png
+   :target: _static/text-without-fonts.png
    :align: center
    :alt: Text without fonts
 
@@ -158,8 +156,15 @@ Most of the platform's by default provide fonts for most of the actively used Un
 
 Basic Multilingual plane: This is first 0000-FFFF range of Unicode and it is used for actively used scripts and languages.
 
+Open Type Fonts
+===============
+
+To handle these complexities Adobe and Microsoft together developed OpenType fonts format. This format provide more scope to font for embedding script sensitive data into it.
+
+Open type fonts has more data rather than simple mapping of character image to code. This data includes substitution tables and positioning table. Rendering engine process GSUB and GPOS table provide final output onto screen. In rendering engine there is specific component called OpenType layout shaper (OTLS) which does this magic.
+
 Web Fonts
-.........
+=========
 
 Multilingual websites were dependant on target platform for expected rendering of the websites. It was big issue and many times websites were not rendered perfectly and end-user need to download and install fonts.
 
@@ -178,15 +183,15 @@ WOFF
 - One of the best thing from WOFF, it loads only characters required for rendering from
   font and save bandwidth.
 
-Web fonts for branding web pages
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Web fonts as a Brand
+--------------------
 
 Earlier intention of Web fonts were to remove TOFU from the Websites. In present generation with the technology improvements and more knowledge around fonts many web designers using it for uniquely styling Websites.
 
 We do have Brand fonts now a days and those get used as a Web Fonts to provide unique styling for home web page.
 
 Rendering Engines
------------------
+*****************
 
 For Latin script it is what you type that you see on screen. This case is not same for complex script like Indic, Arabic and many more.
 
@@ -210,34 +215,27 @@ Furhter it can be Naskh and Nastaliq. Naskh is linear cursive and Nastaliq is (A
 
    Arabic script Naskh
 
-Open Type Fonts
-,,,,,,,,,,,,,,,
-
-To handle these complexities Adobe and Microsoft together developed OpenType fonts format. This format provide more scope to font for embedding script sensitive data into it.
-
-Open type fonts has more data rather than simple mapping of character image to code. This data includes substitution tables and positioning table. Rendering engine process GSUB and GPOS table provide final output onto screen. In rendering engine there is specific component called OpenType layout shaper (OTLS) which does this magic.
-
 Uniscribe
----------
+=========
 
-In Windows it’s Uniscribe. With the actual file usp10.dll. It has been treated as a reference implementation of Open Type specs. Though during the experience different versions of usp10.dll in same Operating system often caused different rendering experience in applications.
+In Windows Uniscribe is OTLS and actual file name is usp10.dll. It has been treated as a reference implementation of Open Type specs. Though during the experience different versions of usp10.dll in same Operating system often caused different rendering experience in applications.
 
 Example: Different usp10.dll in MS-Office and Windows OS.
 
 Harfbuzz
---------
+========
 
 In Linux harfbuzz has became de facto standard. Harfbuzz is compatible with Uniscribe and make sure to provide same processing to fonts as it does with Uniscribe. Compatibility between Uniscribe and Harfbuzz has made it possible to increase fonts portability across multiple platform. Harfbuzz is under more permissive Free and open source Apache license and any product can use it without restrictions.
 
 Prior Harfbuzz, each rendering engine example, Pango, ICU and QT were having own codebase for OTLS, over the time it created big incompatiblity issues across rendering engines for processing of fonts. Fonts were not providing same results across rendering engines and platforms. Harfbuzz has significantly helped to make it uniform now.
 
 ATSUI
------
+=====
 
 Apply has different complex script processing mechanism with  ATSUI (Apple Type Services for Unicode Imaging) library. ATSUI mechanism has provided more scope to make fonts more intelligent by embedding Finite state machines (FSM) into fonts. It create less dependency on rendering engine and more freedom of design and programming fonts as per required for typographers.
 
 Locales
-=======
+*******
 
 What is locale?
 
@@ -256,6 +254,6 @@ Locale provide this crucial data to program. During earlier days every OS has it
 But with the start of Unicode CLDR data, most of the partner has been migrated to it.
 
 Unicode CLDR
-............
+============
 
 The term CLDR stands for common locale data repository and it provides key building blocks to support world languages in software. After first release in 2003 in present stage Unicode CLDR has became huge repository for World languages and its growing and growing. Unicode CLDR has been already used and supported by major software companies including Apple, Google, IBM and Microsoft.
