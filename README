@@ -1,1 +1,6 @@
 This is project from internationalization engineering group to create book for i18n best practices useful for developers.
+
+$cd docs
+$make html
+
+$firefox _build/html/index.html
