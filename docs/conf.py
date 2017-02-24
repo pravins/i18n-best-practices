@@ -48,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'i18n-best-practices'
+project = u'I18N best practices'
 copyright = u'2017, Pravin Satpute'
 author = u'Pravin Satpute'
 
@@ -259,7 +259,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'i18n-best-practices.tex', u'i18n-best-practices Documentation',
+    (master_doc, 'i18n-best-practices.tex', u'I18N best practices',
      u'Pravin Satpute', 'manual'),
 ]
 
@@ -302,7 +302,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'i18n-best-practices', u'i18n-best-practices Documentation',
-     [author], 1)
+     [u'Pravin Satpute'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -316,8 +316,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'i18n-best-practices', u'i18n-best-practices Documentation',
-     author, 'i18n-best-practices', 'One line description of project.',
+    (master_doc, 'i18n-best-practices', u'I18N best practice guidelines',
+     u'Pravin Satpute', 'i18n-best-practices', 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -341,10 +341,10 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = project
-epub_author = author
-epub_publisher = author
-epub_copyright = copyright
+epub_title = u'I18N best practices'
+epub_author = u'Pravin Satpute'
+epub_publisher = u'Pravin Satpute'
+epub_copyright = u'2017, Pravin Satpute'
 
 # The basename for the epub file. It defaults to the project name.
 # epub_basename = project
