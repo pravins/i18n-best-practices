@@ -1,4 +1,4 @@
-This is project from internationalization engineering group to create book for i18n best practices useful for developers.
+This is project from Red Hat internationalization team to create guidelines for i18n best practices useful for developers.
 
 $cd docs
 $make html
