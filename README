@@ -1,6 +1,0 @@
-This is project from Red Hat internationalization team to create guidelines for i18n best practices useful for developers.
-
-$cd docs
-$make html
-
-$firefox _build/html/index.html
