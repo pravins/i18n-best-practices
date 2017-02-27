@@ -42,7 +42,7 @@ source_suffix = '.rst'
 
 # The encoding of source files.
 #
-# source_encoding = 'utf-8-sig'
+source_encoding = 'utf-8-sig'
 
 # The master toctree document.
 master_doc = 'index'
@@ -127,6 +127,8 @@ html_theme = 'alabaster'
 #
 # html_theme_options = {}
 
+#html_style = {'mystyle.css','html4css1.css'}  - added by me.
+
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
 
@@ -203,7 +205,7 @@ html_static_path = ['_static']
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 #
-# html_show_copyright = True
+html_show_copyright = True
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the

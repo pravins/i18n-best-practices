@@ -7,13 +7,13 @@ In fact same evolution has been happened with the computer and we are witnessing
 
 Few terms:
 
-Internationalization (a.k.a i18n)
+**Internationalization (a.k.a i18n)**
         Development of application in a way to make it adaptable to the requirements of different regionals and languages with minimal codebase change.
 
-Localization (a.k.a l10n)
+**Localization (a.k.a l10n)**
         Adapting application to the different regional and language requirement, mostly with translation. This is bit more than translation in some cases i.e. one might need to bring significant cultural changes to application looks, including Date, Time format, localization of images etc.
 
-Globalization (aka g11n)
+**Globalization (aka g11n)**
         There are numerous definition of globalization in different context. Internationalization and Localization together forms software globalization. This is more kind a strategy for launching i18n & l10n product into new market.
 
 
@@ -24,7 +24,7 @@ Out of the entire world population 7+billion, only 341M people have English as t
 
 .. figure:: _static/world_regional_languages_map.png
    :width: 600 px
-   :target: _static/world_regional_languages_map.png
+   :target: https://commons.wikimedia.org/wiki/File:World_regional_languages_map.svg
    :align: center
    :alt: World regional languages
    

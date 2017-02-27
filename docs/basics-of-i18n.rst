@@ -3,9 +3,9 @@ Basics of Internationalization
 
 Internationalization can be further divided into two types. It is core internationalization and application internationalization.
 
-Core internationalization is the support from platform for the application getting hosted on it. Platform here means an Operating systems. These support mostly comes in the form of api’s. This includes encoding conversions, fonts rendering libraries, locales and input methods.
+**Core internationalization** is the support from platform for the application getting hosted on it. Platform here means an Operating systems. These support mostly comes in the form of api’s. This includes encoding conversions, fonts rendering libraries, locales and input methods.
 
-Application internationalization is more in the form of developing application in a way to use i18n libraries provided by the platform and same time should be adaptable with minimum changes to the requirements of different regional languages.
+**Application internationalization** is more in the form of developing application in a way to use i18n libraries provided by the platform and same time should be adaptable with minimum changes to the requirements of different regional languages.
 
 Please note here Operating system itself is one kind a application and requires its own internationalization.
 
@@ -39,7 +39,7 @@ That is why in 1963 during the start of computing era ASCII (American Standard C
 
 Main intention behind encoding standard was portability of data across computers.
 
-Multiple uses of extended ASCII:
+**Multiple uses of extended ASCII:**
 
 Based on extended ASCII, other countries started creating their own encoding standards to accommodate respective scripts characters. Few of those are
 
@@ -49,7 +49,7 @@ Based on extended ASCII, other countries started creating their own encoding sta
 
 All local encoding made sure to keep lower bit of ASCII 0-127 same as with original ASCII standard. Therefor no problem of encoding interoperability with English but with Data from 128-255 all encodings were incompatible.
 
-Have you seen how does encoding issues looks like?
+**Have you seen how does encoding issues looks like?**
 
 .. figure:: _static/wrong_encoding.png
    :width: 600 px
@@ -68,15 +68,17 @@ Incorporated in January, 1991 Unicode Consortium started to work on resolving pr
 
 Unicode started with simple mission
 
-Unicode provides a unique number for every character,
+.. class:: center
 
-no matter what the platform,
+        **Unicode provides a unique number for every character,**
 
-no matter what the program,
+        **no matter what the platform,**
 
-no matter what the language.
+        **no matter what the program,**
 
-Unicode is huge each block of 16-bits and total 21 blocks. Total 21-bit. Most of the active scripts are covered in its first block i.e. 0000-FFFF
+        **no matter what the language.**
+
+Unicode is huge, each block of 16-bits and total 21 blocks. Total 21-bit. Most of the active scripts are covered in its first block i.e. 0000-FFFF
 
 In the initial version Unicode identified all the encodings in the world and started providing different codes to it. Though It took long time but now Unicode is accepted globally.
 
