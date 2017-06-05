@@ -16,6 +16,7 @@ Contents:
    imp-points-for-i18n
    l10n-string-extraction-frameworks
    i18n-of-c-application
+   i18n-of-python-application
 
 
 
