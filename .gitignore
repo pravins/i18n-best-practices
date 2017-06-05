@@ -1,0 +1,4 @@
+# i18n-best-practices .gitignore file
+.gitignore
+.idea/
+docs/_build/

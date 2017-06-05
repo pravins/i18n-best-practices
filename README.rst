@@ -6,11 +6,8 @@ This is the project to provide best practices for i18nize project useful for dev
 
 Read latest version `here <http://i18n-best-practices.readthedocs.io/en/latest/>`_.
 
+.. code:: shell
 
-::
-   $cd docs
    $make html
-   
-   i$firefox _build/html/index.html
 
-::
+   $firefox _build/html/index.html
