@@ -124,6 +124,8 @@ From your program folder run following commands
 
 - helloworld.pot is the Portable Object Template (.pot) file developer suppose to share with translators.
 
+- Update the fields in this pot file as required. Make sure to set CHARSET=UTF-8, else it will throw an error while generating .mo file.
+
 Translations
 ============
 
@@ -158,7 +160,6 @@ Creating .mo file from .po file
 
 MO - Machine Object file
 ^^^^^^^^^^^^^^^^^^^^^^^^
-Mo file is compiled binary version of .po file and it is more efficient for processing by computers.
 
 ::
 
@@ -193,6 +194,8 @@ Demonstration of application
    Hello World
    $LANGUAGE=fr python helloworld.py
    Bonjour le monde
+
+- In example of "I18N of C Application" we used "bindtextdomain("helloworld","/usr/share/locale")" and we copied .mo file in /usr/share/locale/LANG_CODE/LC_MESSAGES Folder, in this case we have used local directory example. For local testing this is preferred for wider distribution system directory is recommended. Do changes in "t = gettext.translation('helloworld', 'locale', fallback=True)" accordingly.
 
 Automation for i18n
 ^^^^^^^^^^^^^^^^^^^
