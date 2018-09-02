@@ -1,0 +1,372 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Basics of Internationalization &#8212; I18N best practices 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Important points for i18n" href="imp-points-for-i18n.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="basics-of-internationalization">
+<h1>Basics of Internationalization<a class="headerlink" href="#basics-of-internationalization" title="Permalink to this headline">¶</a></h1>
+<p>Internationalization can be further divided into two types. It is core internationalization and application internationalization.</p>
+<p><strong>Core internationalization</strong> is the support from platform for the application getting hosted on it. Platform here means an Operating systems. These support mostly comes in the form of api’s. This includes encoding conversions, fonts rendering libraries, locales and input methods.</p>
+<p><strong>Application internationalization</strong> is more in the form of developing application in a way to use i18n libraries provided by the platform and same time should be adaptable with minimum changes to the requirements of different regional languages.</p>
+<p>Please note here Operating system itself is one kind a application and requires its own internationalization.</p>
+<p>If one asked things that has helped to language computing world over the year, will say it’s standardardization.</p>
+<ul class="simple">
+<li>Many countries</li>
+<li>Many languages</li>
+<li><ul class="first">
+<li>Many languages uses multiple script for writing. Maithili language in India can be written by Devanagari, Tirhuta, Kaithi.</li>
+</ul>
+</li>
+<li>Many scripts</li>
+<li>Many users</li>
+<li>Few languages are used across the borders.</li>
+<li><ul class="first">
+<li>Bengali is spoken in India as well in Bangladesh.</li>
+</ul>
+</li>
+</ul>
+<p>Just imagine how it’s difficult to get consensus. Thanks to all efforts that has been done by various companies and standardization organization for many year for getting consensus and developing standards suitable for all.</p>
+<div class="section" id="encoding">
+<h2>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h2>
+<p>Computer deals with binary !!</p>
+<p>Everything we do is get stored in computer in binary. Without standard around encoding we
+can’t do much things.</p>
+<p>That is why in 1963 during the start of computing era ASCII (American Standard Code for Information Interchange) was standardized. Earlier ASCII was 7-bit (0-127) later it further extended for 8-bit and few other language characters were added from 128-255.</p>
+<p>Main intention behind encoding standard was portability of data across computers.</p>
+<p><strong>Multiple uses of extended ASCII:</strong></p>
+<p>Based on extended ASCII, other countries started creating their own encoding standards to accommodate respective scripts characters. Few of those are</p>
+<ul class="simple">
+<li>ISCII (India)</li>
+<li>VISCII (Vietnam)</li>
+<li>YUSCII (Yugoslavia)</li>
+</ul>
+<p>All local encoding made sure to keep lower bit of ASCII 0-127 same as with original ASCII standard. Therefor no problem of encoding interoperability with English but with Data from 128-255 all encodings were incompatible.</p>
+<p><strong>Have you seen how does encoding issues looks like?</strong></p>
+<div class="figure align-center" id="id1">
+<a class="reference external image-reference" href="_static/wrong_encoding.png"><img alt="Encoding Iss" src="_images/wrong_encoding.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Encoding issues</span></p>
+</div>
+<p>Above image is nothing but the typical example, where your data is created with different encoding but viewed or wrongly converted to incompatible encoding. Whenever one see this, first thing to check your encoding related stuff.</p>
+<div class="section" id="unicode-and-iso">
+<h3>Unicode and ISO<a class="headerlink" href="#unicode-and-iso" title="Permalink to this headline">¶</a></h3>
+<p>Incorporated in January, 1991 Unicode Consortium started to work on resolving problem of many encoding standards and incompatibility while transferring data from one computer to other.</p>
+<p>Unicode started with simple mission</p>
+<dl class="class">
+<dt id="center">
+<em class="property">class </em><code class="descname">center</code><a class="headerlink" href="#center" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Unicode provides a unique number for every character,</strong></p>
+<p><strong>no matter what the platform,</strong></p>
+<p><strong>no matter what the program,</strong></p>
+<p><strong>no matter what the language.</strong></p>
+</dd></dl>
+
+<p>Unicode is huge, each block of 16-bits and total 21 blocks. Total 21-bit. Most of the active scripts are covered in its first block i.e. 0000-FFFF</p>
+<p>In the initial version Unicode identified all the encodings in the world and started providing different codes to it. Though It took long time but now Unicode is accepted globally.</p>
+<p>During the same time ISO also started to standardize encoding for different encoding systems. They came up with ISO 10464. Presently both Unicode and ISO 10464 are in sync.</p>
+<p>Unicode is huge resource for the world scripts knowledge. To get glimpse one should look into Unicode character database.</p>
+<p>The most commonly used encodings of Unicode are:</p>
+<p>1 UTF-32</p>
+<blockquote>
+<div><p>This is 32 bit format. (UTF stands for Unicode Transformation Format). A character is represented as a 32 bit integer. This is the only UTF encoding which is fixed length, UTF-16 and UTF-8 are both variable length.</p>
+<p>In UTF-32, each 32 bit value represents one code point and is exactly equal to that code point’s numerical value.</p>
+</div></blockquote>
+<p>2 UTF-16 This is a variable length encoding.</p>
+<blockquote>
+<div>A character is represented as one or two 16 bit integers.</div></blockquote>
+<p>3 UTF-8</p>
+<blockquote>
+<div>This is more interesting to understand. UTF-16 to UTF-8 conversion happens in following way.</div></blockquote>
+<p>Insert Table</p>
+<ul class="simple">
+<li>Important point to note here, UTF-8 is backward compatible with ASCII. UTF-8 take same storage space as ASCII for English characters 1 Byte.</li>
+<li>This is more expensive for Asian script specifically in the range U+0800- U+FFFF since it takes 2 to 3 Bytes.</li>
+<li>One always wonders why to use multi-byte encoding when we can use either UTF-16 or UTF-32 directly but UTF16/UTF32 are easy for computation but are not efficient for storage.</li>
+<li>UTF-8 is a more popular encoding of Unicode and widely used than ASCII.</li>
+</ul>
+<p>Byte order mark</p>
+<p>This is special character in Unicode. U+FEFF. This character is special and provide
+following information</p>
+<ul class="simple">
+<li>What is the byte order, or endianness, the text stream is stored in;</li>
+<li>Confirmation that string is Unicode.</li>
+<li>Whether it is UTF8/UTF16 text?</li>
+<li><ul class="first">
+<li>UTF8 - 0xEF,0xBB,0xBF</li>
+</ul>
+</li>
+<li><ul class="first">
+<li>UTF16 (BE) - 0xFE 0xFF</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="other-encodings">
+<h3>Other Encodings<a class="headerlink" href="#other-encodings" title="Permalink to this headline">¶</a></h3>
+<p>Though Unicode has became de-facto standard still some countries have mandated use of there custom standards. Following are the some list.</p>
+<div class="section" id="sjis">
+<h4>SJIS<a class="headerlink" href="#sjis" title="Permalink to this headline">¶</a></h4>
+<p>Shift Japanese Industrial Standards</p>
+</div>
+</div>
+</div>
+<div class="section" id="fonts">
+<h2>Fonts<a class="headerlink" href="#fonts" title="Permalink to this headline">¶</a></h2>
+<p>How does your computer or any other digital device will looks without fonts?</p>
+<div class="figure align-center" id="id2">
+<a class="reference external image-reference" href="_static/text-without-fonts.png"><img alt="Text without fonts" src="_images/text-without-fonts.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Text without fonts</span></p>
+</div>
+<p>Most of the platform’s by default provide fonts for most of the actively used Unicode scripts. Mostly provides fonts for Basic Multilingual plane of Unicode (0000-FFFF). Still if anytime yousee characters like this or empty/cross square boxes instead of character, make sure you have fonts available for that script.</p>
+<p>Basic Multilingual plane: This is first 0000-FFFF range of Unicode and it is used for actively used scripts and languages.</p>
+<div class="section" id="open-type-fonts">
+<h3>Open Type Fonts<a class="headerlink" href="#open-type-fonts" title="Permalink to this headline">¶</a></h3>
+<p>To handle these complexities Adobe and Microsoft together developed OpenType fonts format. This format provide more scope to font for embedding script sensitive data into it.</p>
+<p>Open type fonts has more data rather than simple mapping of character image to code. This data includes substitution tables and positioning table. Rendering engine process GSUB and GPOS table provide final output onto screen. In rendering engine there is specific component called OpenType layout shaper (OTLS) which does this magic.</p>
+</div>
+<div class="section" id="web-fonts">
+<h3>Web Fonts<a class="headerlink" href="#web-fonts" title="Permalink to this headline">¶</a></h3>
+<p>Multilingual websites were dependant on target platform for expected rendering of the websites. It was big issue and many times websites were not rendered perfectly and end-user need to download and install fonts.</p>
+<p>Websites providing multilingual contents became more intelligent with the invention of Web</p>
+<p>Fonts. When browsing website using Web fonts technologies fonts get loaded into your cache and you see text using download font rather than default fonts in system. As per platform we have different formats for Web fonts.</p>
+<p>EOT</p>
+<ul class="simple">
+<li>Microsoft developed .eot (Embedded Open Type) for uses with internet explorer. Once can create this font with Web Embedding Fonts Tool (WEFT).</li>
+</ul>
+<p>WOFF</p>
+<ul class="simple">
+<li>This is more popular. WOFF is Web open font format. Initial drafted by Mozilla Foundation, Opera Software and Microsoft. WOFF has been also recommended standard by W3C. This can be created from generated from wide variety of fonts editors and also utilities.</li>
+<li>One of the best thing from WOFF, it loads only characters required for rendering from
+font and save bandwidth.</li>
+</ul>
+<div class="section" id="web-fonts-as-a-brand">
+<h4>Web fonts as a Brand<a class="headerlink" href="#web-fonts-as-a-brand" title="Permalink to this headline">¶</a></h4>
+<p>Earlier intention of Web fonts were to remove TOFU from the Websites. In present generation with the technology improvements and more knowledge around fonts many web designers using it for uniquely styling Websites.</p>
+<p>We do have Brand fonts now a days and those get used as a Web Fonts to provide unique styling for home web page.</p>
+</div>
+</div>
+</div>
+<div class="section" id="rendering-engines">
+<h2>Rendering Engines<a class="headerlink" href="#rendering-engines" title="Permalink to this headline">¶</a></h2>
+<p>For Latin script it is what you type that you see on screen. This case is not same for complex script like Indic, Arabic and many more.</p>
+<p>Example In Indic scripts often,</p>
+<ul class="simple">
+<li>Typing 2-3 characters give you single character.
+– क (u+0915) + ◌् (u+094D) + ष (u+0937) =</li>
+<li>Even characters get reordered. क (u+0915) + ि◌ (u+093F) = क</li>
+<li>Single characters get split into multiple part. ക (u+0D15) + െ◌ാ (u+0D4A) = െകാ</li>
+</ul>
+<p>Arabic script brings different type of complexity. First it is written from Right to Left (RTL) and second it is cursive in nature.
+Furhter it can be Naskh and Nastaliq. Naskh is linear cursive and Nastaliq is (Add Text)</p>
+<div class="figure align-center" id="id3">
+<a class="reference external image-reference" href="_static/arabic-script-example.png"><img alt="Arabic script (Naksh)" src="_images/arabic-script-example.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Arabic script Naskh</span></p>
+</div>
+<div class="section" id="uniscribe">
+<h3>Uniscribe<a class="headerlink" href="#uniscribe" title="Permalink to this headline">¶</a></h3>
+<p>In Windows Uniscribe is OTLS and actual file name is usp10.dll. It has been treated as a reference implementation of Open Type specs. Though during the experience different versions of usp10.dll in same Operating system often caused different rendering experience in applications.</p>
+<p>Example: Different usp10.dll in MS-Office and Windows OS.</p>
+</div>
+<div class="section" id="harfbuzz">
+<h3>Harfbuzz<a class="headerlink" href="#harfbuzz" title="Permalink to this headline">¶</a></h3>
+<p>In Linux harfbuzz has became de facto standard. Harfbuzz is compatible with Uniscribe and make sure to provide same processing to fonts as it does with Uniscribe. Compatibility between Uniscribe and Harfbuzz has made it possible to increase fonts portability across multiple platform. Harfbuzz is under more permissive Free and open source Apache license and any product can use it without restrictions.</p>
+<p>Prior Harfbuzz, each rendering engine example, Pango, ICU and QT were having own codebase for OTLS, over the time it created big incompatiblity issues across rendering engines for processing of fonts. Fonts were not providing same results across rendering engines and platforms. Harfbuzz has significantly helped to make it uniform now.</p>
+</div>
+<div class="section" id="atsui">
+<h3>ATSUI<a class="headerlink" href="#atsui" title="Permalink to this headline">¶</a></h3>
+<p>Apply has different complex script processing mechanism with  ATSUI (Apple Type Services for Unicode Imaging) library. ATSUI mechanism has provided more scope to make fonts more intelligent by embedding Finite state machines (FSM) into fonts. It create less dependency on rendering engine and more freedom of design and programming fonts as per required for typographers.</p>
+</div>
+</div>
+<div class="section" id="locales">
+<h2>Locales<a class="headerlink" href="#locales" title="Permalink to this headline">¶</a></h2>
+<p>What is locale?</p>
+<p>Locale helps program to get into the environment required for particular countries and cultures. We have many different conventions need to get changed while running program into particular countries and culture. Like..</p>
+<ul class="simple">
+<li>Date and Time format</li>
+<li>Numeric format</li>
+<li>Data Sorting</li>
+<li>Expression of Yes/No. etc.</li>
+</ul>
+<p>Locale provide this crucial data to program. During earlier days every OS has its own locale data. Like Glibc has its native Locale data, Microsoft had there own and so on.</p>
+<p>But with the start of Unicode CLDR data, most of the partner has been migrated to it.</p>
+<div class="section" id="unicode-cldr">
+<h3>Unicode CLDR<a class="headerlink" href="#unicode-cldr" title="Permalink to this headline">¶</a></h3>
+<p>The term CLDR stands for common locale data repository and it provides key building blocks to support world languages in software. After first release in 2003 in present stage Unicode CLDR has became huge repository for World languages and its growing and growing. Unicode CLDR has been already used and supported by major software companies including Apple, Google, IBM and Microsoft.</p>
+<p>CLDR is collaborative efforts of different domain experts. Various countries governments are part of it and many fields get finalized based on votes of members.</p>
+<p>Unicode CLDR is even much bigger and has more information for each locales.</p>
+</div>
+<div class="section" id="locale-code">
+<h3>Locale Code<a class="headerlink" href="#locale-code" title="Permalink to this headline">¶</a></h3>
+<p>Typically locales are available in langcode_countrycode format. (en_US).</p>
+<p><strong>Why is so combination?</strong></p>
+<p>Many languages are spoken in different countries. Though the languages are same few things are different from country perspective. Like different sorting, different Date/Time format and many more. To handle this differences it is important to have different locale as per lang and country code.</p>
+<p>Example:</p>
+<ul class="simple">
+<li>bn_IN and bn_BD Bengali language locale for India and Bangladesh.</li>
+</ul>
+<p>Language codes are standardized under ISO 639-1 standard. Earlier 2 digit codes were assigned to each language but since 2 digits were insufficient to provide code for all languages in ISO 639-2 languages are represented with 3 digit code.</p>
+<p>The rule used while adding locale in glibc is - if language does not have 2 digit code then create locale with 3 digit code.</p>
+</div>
+<div class="section" id="currency-format">
+<h3>Currency format<a class="headerlink" href="#currency-format" title="Permalink to this headline">¶</a></h3>
+<p>Few countries using “,” as a separator while other are using either “.” or simply space.</p>
+<ul class="simple">
+<li>US and India Format - 1,234,567.89</li>
+<li>German Format - 1.234.567,89</li>
+<li>French Format - 1 234 567,89</li>
+</ul>
+</div>
+<div class="section" id="date-time-format">
+<h3>Date/Time format<a class="headerlink" href="#date-time-format" title="Permalink to this headline">¶</a></h3>
+<p>Its depends how you write date. Whether yyyy-mm-dd format or start with date first then month and then year. Dd-mm-yyyy.</p>
+<ul class="simple">
+<li>India - dd-mm-yyyy</li>
+<li>USA - yyyy-mm-dd</li>
+</ul>
+</div>
+<div class="section" id="collation">
+<h3>Collation<a class="headerlink" href="#collation" title="Permalink to this headline">¶</a></h3>
+<p>Sorting has been remained an interesting topic of research over the time. Sorting varies across countries.</p>
+<ul class="simple">
+<li>Few regions like to Caps first then small. A-Z followed by a-z</li>
+<li>Few regions like SMALL and CAPS letter together. Aa Bb etc.</li>
+</ul>
+<p>Sorting affect significantly day to day work. Everywhere data represented in sorted order.</p>
+</div>
+</div>
+<div class="section" id="input-methods">
+<h2>Input methods<a class="headerlink" href="#input-methods" title="Permalink to this headline">¶</a></h2>
+<p>Unlike English language, For many languages there any many characters than the number of keys available on a keyboard. To get all these characters of particular language, one need to use different key combination of modifiers to get those characters.</p>
+<p>Example:</p>
+<ul class="simple">
+<li>As of Unicode 9.0, Unicode defines a total of 80,388 CJK Unified Ideographs.</li>
+<li>In Devanagari script - 256 characters are presently</li>
+</ul>
+<p>To get required characters from keyboard, software need add-on intelligence. Input methods provide drivers and keymaps to get characters for these complex scripts.</p>
+<div class="figure align-center" id="id4">
+<a class="reference external image-reference" href="_static/keyboard_layout_chinese_traditional.png"><img alt="Keyboard layout Chinese traditional" src="_images/keyboard_layout_chinese_traditional.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Keyboard layout Chinese traditional</span></p>
+</div>
+<p>Input methods also available from platform and also over the year many input methods available on web. Website developers sometime uses online Input method in their applications to avoid dependencies on platforms.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Basics of Internationalization</a><ul>
+<li><a class="reference internal" href="#encoding">Encoding</a><ul>
+<li><a class="reference internal" href="#unicode-and-iso">Unicode and ISO</a></li>
+<li><a class="reference internal" href="#other-encodings">Other Encodings</a><ul>
+<li><a class="reference internal" href="#sjis">SJIS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fonts">Fonts</a><ul>
+<li><a class="reference internal" href="#open-type-fonts">Open Type Fonts</a></li>
+<li><a class="reference internal" href="#web-fonts">Web Fonts</a><ul>
+<li><a class="reference internal" href="#web-fonts-as-a-brand">Web fonts as a Brand</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rendering-engines">Rendering Engines</a><ul>
+<li><a class="reference internal" href="#uniscribe">Uniscribe</a></li>
+<li><a class="reference internal" href="#harfbuzz">Harfbuzz</a></li>
+<li><a class="reference internal" href="#atsui">ATSUI</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#locales">Locales</a><ul>
+<li><a class="reference internal" href="#unicode-cldr">Unicode CLDR</a></li>
+<li><a class="reference internal" href="#locale-code">Locale Code</a></li>
+<li><a class="reference internal" href="#currency-format">Currency format</a></li>
+<li><a class="reference internal" href="#date-time-format">Date/Time format</a></li>
+<li><a class="reference internal" href="#collation">Collation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#input-methods">Input methods</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="introduction.html" title="previous chapter">Introduction</a></li>
+      <li>Next: <a href="imp-points-for-i18n.html" title="next chapter">Important points for i18n</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/basics-of-i18n.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Pravin Satpute.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/basics-of-i18n.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

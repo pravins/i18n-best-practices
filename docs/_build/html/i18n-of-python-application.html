@@ -1,0 +1,291 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>I18N of Python Application &#8212; I18N best practices 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="I18N of C Application" href="i18n-of-c-application.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="i18n-of-python-application">
+<h1>I18N of Python Application<a class="headerlink" href="#i18n-of-python-application" title="Permalink to this headline">¶</a></h1>
+<p>In this section we will see important points developers must consider and include during the development of Python applications.</p>
+<div class="section" id="data-types">
+<h2>Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h2>
+<p>As discussed earlier, Unicode is utmost important element of i18n and your application must be capable of processing and saving Unicode text.</p>
+<p>Python 3 onwards, strings are always <cite>unicode</cite> whereas in Python 2 <cite>str</cite> type is different from <cite>unicode</cite>. So, in Python 2 textual literals should be marked with a <cite>u</cite> prefix. As in</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sa">u</span><span class="s1">&#39;きたないのよりきれいな方がいい</span><span class="se">\n</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-from-files">
+<h2>Reading from files<a class="headerlink" href="#reading-from-files" title="Permalink to this headline">¶</a></h2>
+<p>In Python 2 the <cite>open()</cite> function returns a <cite>str</cite> object, which makes it compulsory to mention <cite>encoding=’UTF-8’</cite> while opening. Whereas in Python 3 opening a file with <cite>t</cite> flag returns an <cite>unicode</cite> object and it will be decoded from the system default encoding. Generally its always safe to mention <cite>encoding=’UTF-8’</cite>.</p>
+</div>
+<div class="section" id="libraries">
+<h2>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h2>
+<p>Python <cite>gettext</cite> module provides i18n services, which depends on underline <cite>gettext</cite> library only. One can also use other libraries as per requirement or choice like <cite>Babel</cite>.</p>
+</div>
+<div class="section" id="i18n-of-hello-world">
+<h2>I18N of “Hello World”<a class="headerlink" href="#i18n-of-hello-world" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="non-i18n-helloworld-py">
+<h3>Non i18n helloworld.py<a class="headerlink" href="#non-i18n-helloworld-py" title="Permalink to this headline">¶</a></h3>
+<p>Most of the developer already familiar with printing <cite>‘Hello World.’</cite> in Python.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello World.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="internationalized-helloworld-py">
+<h3>Internationalized helloworld.py<a class="headerlink" href="#internationalized-helloworld-py" title="Permalink to this headline">¶</a></h3>
+<p>Now lets see, How to internationalized above Helloworld.py with Gettext framework.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gettext</span>
+
+<span class="c1"># Set domain, attach base dir, enable fallback</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ugettext</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Hello World.&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="section" id="explainations">
+<h4>Explainations<a class="headerlink" href="#explainations" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gettext</span>
+</pre></div>
+</div>
+<p>This imports APIs provided by <cite>gettext</cite> python module.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This creates a Translations instance <cite>t</cite> based on the domain <cite>(‘helloworld’)</cite> , localedir <cite>(‘.mo files path’)</cite>, and languages. Here, the program binds <cite>helloworld</cite> domain and sets <cite>locale</cite> dir for the path where <cite>.mo</cite> files will be searched. If no <cite>.mo</cite> file is found, this raises <cite>IOError</cite> if fallback is false <cite>(which is the default)</cite>, and returns a <cite>NullTranslations</cite> instance if <cite>fallback</cite> is <cite>true</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ugettext</span><span class="o">**</span>
+</pre></div>
+</div>
+<p>This creates an instance of <cite>ugettext</cite> which returns the translated message as a <cite>Unicode</cite> string.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">printf</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Notice “_” here, it calls ugettext function.</p>
+<p>This is your internationalized program capable of extracting string for translation and substitute as per your locale. Now in next section see how to extract string, translate those and actually get translation while running application.</p>
+</div>
+</div>
+<div class="section" id="preparing-po-file">
+<h3>Preparing PO file<a class="headerlink" href="#preparing-po-file" title="Permalink to this headline">¶</a></h3>
+<p>From your program folder run following commands</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$xgettext -d helloworld -o helloworld.pot -s helloworld.py
+</pre></div>
+</div>
+<ul class="simple">
+<li>xgettext - extract gettext strings from source.</li>
+<li>‘-d’ domainname, ‘-o’ output filename, ‘-s’ generate sorted output.</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># SOME DESCRIPTIVE TITLE.</span>
+<span class="c1"># Copyright (C) YEAR THE PACKAGE&#39;S COPYRIGHT HOLDER</span>
+<span class="c1"># This file is distributed under the same license as the PACKAGE package.</span>
+<span class="c1"># FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.</span>
+<span class="c1">#</span>
+<span class="c1">#, fuzzy</span>
+<span class="s2">&quot;&quot;</span>
+<span class="s2">&quot;Project-Id-Version: PACKAGE VERSION</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;Report-Msgid-Bugs-To: </span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;POT-Creation-Date: 2017-02-14 17:06+0530</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;Language-Team: LANGUAGE &lt;LL@li.org&gt;</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;Language: </span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;MIME-Version: 1.0</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;Content-Type: text/plain; charset=CHARSET</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="s2">&quot;Content-Transfer-Encoding: 8bit</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+<span class="c1">#: helloworld.py:7</span>
+<span class="n">msgid</span>   <span class="s2">&quot;Hello World.&quot;</span>
+<span class="n">msgstr</span>  <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>helloworld.pot is the Portable Object Template (.pot) file developer suppose to share with translators.</li>
+<li>Update the fields in this pot file as required. Make sure to set CHARSET=UTF-8, else it will throw an error while generating .mo file.</li>
+</ul>
+</div>
+<div class="section" id="translations">
+<h3>Translations<a class="headerlink" href="#translations" title="Permalink to this headline">¶</a></h3>
+<p>Just rename .pot file to respective language code and provide it for translations.</p>
+<p><strong>Example</strong></p>
+<ul class="simple">
+<li>For French language - fr.po</li>
+</ul>
+<p>Translators need to update header of PO file as per required and add string for particular language as a substitute.</p>
+<p><strong>Example</strong> : In above case</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msgid</span> <span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Here for French</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msgid</span> <span class="s2">&quot;Hello World.&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;Bonjour le monde&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="execution-of-program">
+<h3>Execution of program<a class="headerlink" href="#execution-of-program" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="creating-mo-file-from-po-file">
+<h4>Creating .mo file from .po file<a class="headerlink" href="#creating-mo-file-from-po-file" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="mo-machine-object-file">
+<h5>MO - Machine Object file<a class="headerlink" href="#mo-machine-object-file" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$msgfmt helloworld.po -o helloworld.mo
+</pre></div>
+</div>
+<p>Msgfmt is program to compile message catalog to binary format.</p>
+</div>
+<div class="section" id="placing-mo-file-in-folder">
+<h5>Placing .mo file in folder<a class="headerlink" href="#placing-mo-file-in-folder" title="Permalink to this headline">¶</a></h5>
+<p>In helloworld.py program, we have given path of “./locale” to bind textdomain.</p>
+<p>To make our translations accessible to program during execution with particular locale those must be kept in this location.</p>
+<p>Gettext looks for particular locale code under this directory while searching for translation file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$sudo mkdir -p ./locale/fr/LC_MESSAGES/
+$cp helloworld.mo ./locale/fr/LC_MESSAGES/
+</pre></div>
+</div>
+</div>
+<div class="section" id="demonstration-of-application">
+<h5>Demonstration of application<a class="headerlink" href="#demonstration-of-application" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Make sure you are in directory of helloworld.py</li>
+<li>Run program</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$python helloworld.py
+Hello World
+$LANGUAGE=fr python helloworld.py
+Bonjour le monde
+</pre></div>
+</div>
+<ul class="simple">
+<li>In example of “I18N of C Application” we used “bindtextdomain(“helloworld”,”/usr/share/locale”)” and we copied .mo file in /usr/share/locale/LANG_CODE/LC_MESSAGES Folder, in this case we have used local directory example. For local testing this is preferred for wider distribution system directory is recommended. Do changes in “t = gettext.translation(‘helloworld’, ‘locale’, fallback=True)” accordingly.</li>
+</ul>
+</div>
+<div class="section" id="automation-for-i18n">
+<h5>Automation for i18n<a class="headerlink" href="#automation-for-i18n" title="Permalink to this headline">¶</a></h5>
+<p>In above helloworld.py internationalization we did many step one by one. In real life programming once .POT file is generated developer need to copy it for many languages and distribute them to translators and after collecting build application accordingly.</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1  $xgettext -d helloworld -o helloworld.pot -s helloworld.py
+2  cp helloworld.pot fr.po
+   # Get translated fr.po from Translator
+
+3  $msgfmt helloworld.po -o helloworld.mo
+4  cp helloworld.mo ./locale/fr/LC_MESSAGES/
+</pre></div>
+</div>
+<p>One may generalize above steps using autotools or Makefile as per requirement of program.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">I18N of Python Application</a><ul>
+<li><a class="reference internal" href="#data-types">Data types</a></li>
+<li><a class="reference internal" href="#reading-from-files">Reading from files</a></li>
+<li><a class="reference internal" href="#libraries">Libraries</a></li>
+<li><a class="reference internal" href="#i18n-of-hello-world">I18N of “Hello World”</a><ul>
+<li><a class="reference internal" href="#non-i18n-helloworld-py">Non i18n helloworld.py</a></li>
+<li><a class="reference internal" href="#internationalized-helloworld-py">Internationalized helloworld.py</a><ul>
+<li><a class="reference internal" href="#explainations">Explainations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preparing-po-file">Preparing PO file</a></li>
+<li><a class="reference internal" href="#translations">Translations</a></li>
+<li><a class="reference internal" href="#execution-of-program">Execution of program</a><ul>
+<li><a class="reference internal" href="#creating-mo-file-from-po-file">Creating .mo file from .po file</a><ul>
+<li><a class="reference internal" href="#mo-machine-object-file">MO - Machine Object file</a></li>
+<li><a class="reference internal" href="#placing-mo-file-in-folder">Placing .mo file in folder</a></li>
+<li><a class="reference internal" href="#demonstration-of-application">Demonstration of application</a></li>
+<li><a class="reference internal" href="#automation-for-i18n">Automation for i18n</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="i18n-of-c-application.html" title="previous chapter">I18N of C Application</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/i18n-of-python-application.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Pravin Satpute.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/i18n-of-python-application.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

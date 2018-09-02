@@ -1,0 +1,132 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Important points for i18n &#8212; I18N best practices 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="L10N string extraction frameworks" href="l10n-string-extraction-frameworks.html" />
+    <link rel="prev" title="Basics of Internationalization" href="basics-of-i18n.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="important-points-for-i18n">
+<h1>Important points for i18n<a class="headerlink" href="#important-points-for-i18n" title="Permalink to this headline">¶</a></h1>
+<p>When developing internationalized application developer need to consider two important aspects as following:</p>
+<dl class="docutils">
+<dt>1 Application should accept system’s locale or one provided by user and change its behaviour accordingly.</dt>
+<dd><p class="first">Example:
+- <strong>Website</strong>: If you are developing website and end user is viewing it in browser running in Japanese locale. Website dates, time and currency format should get changed into Japanese locale.</p>
+<ul class="last simple">
+<li><strong>Desktop application</strong>: It’s behaviour should change based on locale format of desktop.</li>
+</ul>
+</dd>
+</dl>
+<p>2 Applications UI should get change according to system locale.</p>
+<p>This is important aspect of internationalized application. Converting whole UI into target language without any major changes into application. Just by selecting appropriate system locale or browser locale. We will see this with example in coming few sections how can we achieve it.</p>
+<div class="section" id="core-i18n-support-on-platform">
+<h2>Core i18n support on platform<a class="headerlink" href="#core-i18n-support-on-platform" title="Permalink to this headline">¶</a></h2>
+<p>Target language must have been enabled on target platform. If target language is not available on platform.</p>
+<p>1 User might not get required locales.</p>
+<p>2 Fonts required for rendering target script might be not available. (With Webfonts this can be handled for Websites as discussed in Wen fonts section)</p>
+</div>
+<div class="section" id="application-should-accept-system-locale">
+<h2>Application should accept system locale<a class="headerlink" href="#application-should-accept-system-locale" title="Permalink to this headline">¶</a></h2>
+<p>Non internationalized application starts in system’s default locale irrespective of active locale. Like in C program its  “C” locale. To get application use system locale or one which user expecting program must be initialized by setting locale. We will see how to do it with different programming language in coming sections.</p>
+</div>
+<div class="section" id="strings-and-code-separation">
+<h2>Strings and Code separation<a class="headerlink" href="#strings-and-code-separation" title="Permalink to this headline">¶</a></h2>
+<p>One of the important goal of internationalization is minimal code changes while moving products in between different languages. Before technology getting matured developer were maintaining different code bases for different language. I.e. Build for Japanese, English etc.</p>
+<p>But this approach was not realistic for supporting many languages and also it was not dynamic.</p>
+<p>Also other important issue comes, when we design buttons of application. Translating few words from one language to another results in translated word either bit lengthy or tiny. It affects app design drastically and it must be auto adjustable with overall design.</p>
+<p>Example: English equivalent of Jet Black is Rabenschwarz</p>
+<p>Separating code and string has been became much simpler now a days with the introductions of a frameworks like gettext.</p>
+<p>Framework like gettext not only help to extract string elements from codebase but also help to select exact language for replacement of strings depending upon locale.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Important points for i18n</a><ul>
+<li><a class="reference internal" href="#core-i18n-support-on-platform">Core i18n support on platform</a></li>
+<li><a class="reference internal" href="#application-should-accept-system-locale">Application should accept system locale</a></li>
+<li><a class="reference internal" href="#strings-and-code-separation">Strings and Code separation</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="basics-of-i18n.html" title="previous chapter">Basics of Internationalization</a></li>
+      <li>Next: <a href="l10n-string-extraction-frameworks.html" title="next chapter">L10N string extraction frameworks</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/imp-points-for-i18n.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Pravin Satpute.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/imp-points-for-i18n.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,196 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>L10N string extraction frameworks &#8212; I18N best practices 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="I18N of C Application" href="i18n-of-c-application.html" />
+    <link rel="prev" title="Important points for i18n" href="imp-points-for-i18n.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="l10n-string-extraction-frameworks">
+<h1>L10N string extraction frameworks<a class="headerlink" href="#l10n-string-extraction-frameworks" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="gettext">
+<h2>Gettext<a class="headerlink" href="#gettext" title="Permalink to this headline">¶</a></h2>
+<p>Prior to gettext framework, handling of translations related activities i.e. Extractions of string, replacing translated string with proper localized string during runtime was mostly handled by program itself.</p>
+<p>It was adding one different complexity of writing internationalized program. In fact many applications were shipped for specific languages only. User need to download exact program for his language.</p>
+<div class="section" id="concepts">
+<h3>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h3>
+<p>As Gettext documentation says</p>
+<p><em>“GNU gettext is designed to minimize the impact of internationalization on program sources, keeping this impact as small and hardly noticeable as possible. Internationalization has better chances of succeeding if it is very light weighted, or at least, appear to be so, when looking at program sources.”</em></p>
+<p>Gettext provides</p>
+<ul class="simple">
+<li>A set of conventions about how programs should be written to support message catalogs.</li>
+<li>A directory and file naming organization for the message catalogs themselves.</li>
+<li>A runtime library supporting the retrieval of translated messages.</li>
+<li>A few stand-alone programs to massage in various ways the sets of translatable strings, or already translated strings.</li>
+<li>A library supporting the parsing and creation of files containing translated messages.</li>
+<li>A special mode for Emacs1 which helps preparing these sets and bringing them up to date.</li>
+</ul>
+<p>Implementation</p>
+<p>Following diagram provides list of all the utilities which used throughout implementation of gettext.</p>
+<div class="figure align-center" id="id1">
+<a class="reference external image-reference" href="_static/overview-of-gettext-utilities.png"><img alt="Overview of gettext utilities" src="_images/overview-of-gettext-utilities.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">Overview of gettext utilities</span></p>
+</div>
+</div>
+<div class="section" id="extraction">
+<h3>Extraction<a class="headerlink" href="#extraction" title="Permalink to this headline">¶</a></h3>
+<p>As information given in above diagram. Modifying source code as per requirement and guidelines given by gettext is first important change required from the developer.</p>
+<p>Once marking source strings for translations is done, then gettext has provided number of tools which can be simply automate using Makefile. As shown in above block diagram</p>
+<ul class="simple">
+<li><strong>xgettext</strong> - Extract translatable strings from given input files.</li>
+<li><strong>msgmerge</strong> - For refreshing already generated .pot file without data loss.</li>
+<li><strong>msgfmt</strong> - Generate binary message catalog from textual translation description.</li>
+</ul>
+<p>In example of internationalization of Hello World i18n gettext has been used and it provides practical example of its implementation.</p>
+</div>
+<div class="section" id="installation-of-gettext">
+<h3>Installation of Gettext<a class="headerlink" href="#installation-of-gettext" title="Permalink to this headline">¶</a></h3>
+<p>Gettext is available across platforms.</p>
+<p><strong>Fedora/Red Hat/Cent OS</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[user@host]$ sudo yum install gettext
+</pre></div>
+</div>
+<p><strong>Debian/Ubuntu</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[user@host]$ sudo apt-get install gettext
+</pre></div>
+</div>
+<p><strong>Windows</strong></p>
+<p>Precompiled binaries are available for Windows at <a class="reference external" href="https://mlocati.github.io/articles/gettext-iconv-windows.html">https://mlocati.github.io/articles/gettext-iconv-windows.html</a></p>
+<p>Available in Shared and Static flavors. Where static means setup size is much bigger, but all the executables may be moved around as you like, no DLL-dependencies. Shared is smaller in size but all DLL must stay together.</p>
+<p><strong>MacOS</strong></p>
+<ul class="simple">
+<li>Open Terminal</li>
+<li>Run:</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot; -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot; &lt; /dev/null 2&gt; /dev/null
+
+$brew install gettext
+</pre></div>
+</div>
+<p>Detailed information available at <a class="reference external" href="http://macappstore.org/gettext/">http://macappstore.org/gettext/</a></p>
+</div>
+</div>
+<div class="section" id="xliff">
+<h2>XLIFF<a class="headerlink" href="#xliff" title="Permalink to this headline">¶</a></h2>
+<p>XML Localisation Interchange File Format. <a class="reference external" href="http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/xliff-core-v2.0-os.html">http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/xliff-core-v2.0-os.html</a></p>
+<p><em>“XLIFF is the  XML Localisation Interchange File Format designed by a group of multilingual content publishers, software providers, localization service providers, localization tools providers and researchers. It is intended to give any multilingual content owner a single interchange file format that can be understood by any localization provider, using any conformant localization tool. While the primary focus is on being a lossless interchange format, usage of XLIFF as a processing format is neither encouraged nor discouraged or prohibited.”</em></p>
+</div>
+<div class="section" id="l20n">
+<h2>L20N<a class="headerlink" href="#l20n" title="Permalink to this headline">¶</a></h2>
+<p>Stands for “L10N 2.0” developed by Mozilla. Its main core is users should be able to benefit
+from the entire expressive power of the natural language and keeps simple things simple for
+developer and at the same time makes complex things possible. Presently in used by Mozilla.</p>
+</div>
+<div class="section" id="qt-translation-tools">
+<h2>Qt translation tools<a class="headerlink" href="#qt-translation-tools" title="Permalink to this headline">¶</a></h2>
+<p>This is bit similar to gettext but provide good utilities but this is only limited to QT framework
+does not work outside.</p>
+</div>
+<div class="section" id="java-properties">
+<h2>Java properties<a class="headerlink" href="#java-properties" title="Permalink to this headline">¶</a></h2>
+<p>This is .properties file extension also know as Property Resource Bundles. These files used to
+store strings for localizations.</p>
+</div>
+<div class="section" id="windows-resources">
+<h2>Windows resources<a class="headerlink" href="#windows-resources" title="Permalink to this headline">¶</a></h2>
+<p>.Net and various Windows technologies use concept of resource file for localization of application.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">L10N string extraction frameworks</a><ul>
+<li><a class="reference internal" href="#gettext">Gettext</a><ul>
+<li><a class="reference internal" href="#concepts">Concepts</a></li>
+<li><a class="reference internal" href="#extraction">Extraction</a></li>
+<li><a class="reference internal" href="#installation-of-gettext">Installation of Gettext</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xliff">XLIFF</a></li>
+<li><a class="reference internal" href="#l20n">L20N</a></li>
+<li><a class="reference internal" href="#qt-translation-tools">Qt translation tools</a></li>
+<li><a class="reference internal" href="#java-properties">Java properties</a></li>
+<li><a class="reference internal" href="#windows-resources">Windows resources</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="imp-points-for-i18n.html" title="previous chapter">Important points for i18n</a></li>
+      <li>Next: <a href="i18n-of-c-application.html" title="next chapter">I18N of C Application</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/l10n-string-extraction-frameworks.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Pravin Satpute.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/l10n-string-extraction-frameworks.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

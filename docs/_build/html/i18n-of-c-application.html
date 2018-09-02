@@ -1,0 +1,342 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>I18N of C Application &#8212; I18N best practices 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="I18N of Python Application" href="i18n-of-python-application.html" />
+    <link rel="prev" title="L10N string extraction frameworks" href="l10n-string-extraction-frameworks.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="i18n-of-c-application">
+<h1>I18N of C Application<a class="headerlink" href="#i18n-of-c-application" title="Permalink to this headline">¶</a></h1>
+<p>In this section we will see what are important points developers must consider and include during the development of C programming applications.</p>
+<div class="section" id="data-types">
+<h2>Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h2>
+<p>As discussed in earlier sections Unicode is utmost important element of i18n. Your application must be capable of processing and saving Unicode text.</p>
+<ul class="simple">
+<li><strong>char</strong> : This is 8-bit Data type and this can be used for UTF-8.</li>
+<li><strong>wchar_t</strong> : Here w stands for wide char. This datatype was introduced to support Unicode but its size is dependant on compiler. To avoid this confusion now we have char16_t and char32_t.</li>
+<li><strong>char16_t</strong> : This is for 16-bit code units. Unicode basic multilingual plane i.e. from u+0000 - u+FFFF can be represented by this data type.</li>
+<li><strong>char32_t</strong> : This is for 32-bit code units. Unicode is of 21-bit, so all Unicode data can be represented by this datatype.</li>
+</ul>
+<p>As discussed in Encoding sections thought UTF16 and UTF32 are easy for computation from storage efficiency perspective it’s good to use UTF-8.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Use UTF-8 as much as possible and convert it to either UTF16 or UTF32 only when need for computation or string operations like uppercase kind conversions.</p>
+</div>
+</div>
+<div class="section" id="libraries">
+<h2>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h2>
+<p>Gettext is widely used libraries. One can also use other libraries as per requirement or choice. For Gettext libraries see section about L10N string extraction frameworks.</p>
+</div>
+<div class="section" id="i18n-of-hello-world">
+<h2>I18N of “Hello World”<a class="headerlink" href="#i18n-of-hello-world" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="non-i18n-hellworld-c">
+<h3>Non i18n hellworld.c<a class="headerlink" href="#non-i18n-hellworld-c" title="Permalink to this headline">¶</a></h3>
+<p>Most of the developer already familiar with Helloworld.c program.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include&lt;stdio.h&gt;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="internationalized-helloworld-c">
+<h3>Internationalized helloworld.c<a class="headerlink" href="#internationalized-helloworld-c" title="Permalink to this headline">¶</a></h3>
+<p>Now lets see, How to internationalized above Helloworld.c with Gettext framework.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include&lt;libintl.h&gt;</span>
+<span class="c1">#include&lt;locale.h&gt;</span>
+<span class="c1">#include&lt;stdio.h&gt;</span>
+<span class="c1">#define _(String) gettext (String)</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">setlocale</span><span class="p">(</span><span class="n">LC_ALL</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+  <span class="n">bindtextdomain</span><span class="p">(</span><span class="s2">&quot;helloworld&quot;</span><span class="p">,</span><span class="s2">&quot;/usr/share/locale&quot;</span><span class="p">);</span>
+  <span class="n">textdomain</span><span class="p">(</span><span class="s2">&quot;helloworld&quot;</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">));</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="explainations">
+<h4>Explainations<a class="headerlink" href="#explainations" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="libintl-h">
+<h5>libintl.h<a class="headerlink" href="#libintl-h" title="Permalink to this headline">¶</a></h5>
+<p>This header for defines the macros __USE_GNU_GETTEXT, __GNU_GETTEXT_SUPPORTED_REVISION, and declares the functions gettext, dgettext, dcgettext, ngettext, dngettext, dcngettext, textdomain, bindtextdomain,
+bind_textdomain_codeset.</p>
+<p>Gnulib module: gettext provides this header file.</p>
+</div>
+<div class="section" id="locale-h">
+<h5>locale.h<a class="headerlink" href="#locale-h" title="Permalink to this headline">¶</a></h5>
+<p>This header file provided the macros required for location specific information. This includes
+LC_ALL, LC_COLLATE, LC_CTYPE, LC_MONETARY, LC_NUMERIC, LC_TIME</p>
+<p>Provides functions like localeconv and setlocale.</p>
+</div>
+<div class="section" id="define-string-gettext-string">
+<h5>#define _(String) gettext (String)<a class="headerlink" href="#define-string-gettext-string" title="Permalink to this headline">¶</a></h5>
+<p>For code readability this is usual practice of defining #define and calling gettext function just by adding “_” before string.</p>
+</div>
+<div class="section" id="setlocale-lc-all">
+<h5>setlocale(LC_ALL,”“);<a class="headerlink" href="#setlocale-lc-all" title="Permalink to this headline">¶</a></h5>
+<p>As per ISO C all programs start by default in the standard ‘C’ locale. To use the locales specified by the environment, one has to call setlocale. Once you call above function locale environment variables will be set to your system or present locale.</p>
+<p>More information about in in Locales section.</p>
+</div>
+<div class="section" id="bindtextdomain">
+<h5>Bindtextdomain<a class="headerlink" href="#bindtextdomain" title="Permalink to this headline">¶</a></h5>
+<p>This function can be used to specify the directory which contains the message catalogs for domain domainname for the different languages. Good to provide absolute path to avoid confusion.</p>
+</div>
+<div class="section" id="textdomain-helloworld">
+<h5>textdomain(“helloworld”)<a class="headerlink" href="#textdomain-helloworld" title="Permalink to this headline">¶</a></h5>
+<p>The textdomain function sets the default domain, which is used in all future gettext calls, to domainname. Before the first call to textdomain the default domain is messages.</p>
+</div>
+<div class="section" id="printf-hello-worldn">
+<h5>printf(_(“Hello Worldn”));<a class="headerlink" href="#printf-hello-worldn" title="Permalink to this headline">¶</a></h5>
+<p>Watch “_” here, we are calling gettext function here.</p>
+<p>This is your internationalized program capable of extracting string for translation and substitute as per your locale. Now in next section see how to extract string, translate those and actually get translation while running application.</p>
+</div>
+</div>
+</div>
+<div class="section" id="preparing-po-file">
+<h3>Preparing PO file<a class="headerlink" href="#preparing-po-file" title="Permalink to this headline">¶</a></h3>
+<p>From your program folder run following commands</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$mkdir po
+
+$xgettext -d helloworld -o po/helloworld.pot -k_ -s helloworld.c
+</pre></div>
+</div>
+<ul class="simple">
+<li>xgettext - extract gettext strings from source.</li>
+<li>‘-d’ domainname, ‘-o’ output filename, ‘-s’ generate sorted output.</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$cat po/helloworld.pot
+
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE&#39;S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE
+package.
+# FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.
+#
+#, fuzzy
+msgid &quot;&quot;
+msgstr &quot;&quot;
+&quot;Project-Id-Version: PACKAGE VERSION\n&quot;
+&quot;Report-Msgid-Bugs-To: \n&quot;
+&quot;POT-Creation-Date: 2017-01-13 15:18+0530\n&quot;
+&quot;PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n&quot;
+&quot;Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;\n&quot;
+&quot;Language-Team: LANGUAGE &lt;LL@li.org&gt;\n&quot;
+&quot;Language: \n&quot;
+&quot;MIME-Version: 1.0\n&quot;
+&quot;Content-Type: text/plain; charset=CHARSET\n&quot;
+&quot;Content-Transfer-Encoding: 8bit\n&quot;
+#: i18nhello.c:12
+#, c-format
+msgid &quot;Hello World\n&quot;
+msgstr &quot;&quot;
+</pre></div>
+</div>
+<ul class="simple">
+<li>helloworld.pot is the Portable Object Template (.pot) file developer suppose to share with translators.</li>
+</ul>
+</div>
+<div class="section" id="translations">
+<h3>Translations<a class="headerlink" href="#translations" title="Permalink to this headline">¶</a></h3>
+<p>Just rename .pot file to respective language code and provide it for translations.</p>
+<p><strong>Example</strong></p>
+<ul class="simple">
+<li>For Hindi language - hi.po</li>
+<li>For particular language spoken in multiple countries. Like Bengali (Spoken in India as well in Bangladesh) - hi_IN.po or hi_BD.po</li>
+<li>For languages with particular encoding.
+- zh_CN_GB2312.po</li>
+</ul>
+<p>Translators need to update header of PO file as per required and add string for particular language as a substitute.</p>
+<p><strong>Example</strong> : In above case</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msgid</span> <span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Here for Hindi</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msgid</span> <span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">msgstr</span> <span class="s2">&quot;नमस्ते दुनिया &quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="execution-of-program">
+<h3>Execution of program<a class="headerlink" href="#execution-of-program" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="creating-mo-file-from-po-file">
+<h4>Creating .mo file from .po file<a class="headerlink" href="#creating-mo-file-from-po-file" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="mo-machine-object-file">
+<h5>MO - Machine Object file<a class="headerlink" href="#mo-machine-object-file" title="Permalink to this headline">¶</a></h5>
+<p>Mo file is compiled binary version of .po file and it is more efficient for processing by computers.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$msgfmt helloworld.po -o helloworld.mo
+</pre></div>
+</div>
+<p>Msgfmt is program to compile message catalog to binary format.</p>
+</div>
+<div class="section" id="placing-mo-file-in-folder">
+<h5>Placing .mo file in folder<a class="headerlink" href="#placing-mo-file-in-folder" title="Permalink to this headline">¶</a></h5>
+<p>In helloworld.c program, we have given path of “/usr/share/locale” in bindtextdomain function.</p>
+<p>To make our translations accessible to program during execution with particular locale those must be kept in this location.</p>
+<p>Gettext looks for particular locale code under this directory while searching for translation file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$sudo mkdir /usr/share/locale/hi/LC_MESSAGES/
+$cp helloworld.mo /usr/share/locale/hi/LC_MESSAGES/
+</pre></div>
+</div>
+</div>
+<div class="section" id="demonstration-of-application">
+<h5>Demonstration of application<a class="headerlink" href="#demonstration-of-application" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Compile helloworld.c, make sure you are in directory of helloworld.c</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$gcc -o helloworld helloworld.c
+</pre></div>
+</div>
+<ul class="simple">
+<li>Run program</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$./helloworld
+Hello Wolrd
+$LANG=hi_IN ./helloworld
+नम ते द ु नया
+</pre></div>
+</div>
+</div>
+<div class="section" id="automation-for-i18n">
+<h5>Automation for i18n<a class="headerlink" href="#automation-for-i18n" title="Permalink to this headline">¶</a></h5>
+<p>In above helloworld.c internationalization we did many step one by one. In real life programming once .POT file is generated developer need to copy it for many languages and distribute them to translators and after collecting build application accordingly.</p>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1  $xgettext -d helloworld -o po/helloworld.pot -k_ -s helloworld.c
+2  cp po/helloworld.pot hi.po
+   # Get translated hi.po from Translator
+
+3  $msgfmt helloworld.po -o helloworld.mo
+4  cp helloworld.mo /usr/share/locale/hi/LC_MESSAGES/
+</pre></div>
+</div>
+<p>One need to generalize above steps using autotools or Makefile as per requirement of program.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">I18N of C Application</a><ul>
+<li><a class="reference internal" href="#data-types">Data types</a></li>
+<li><a class="reference internal" href="#libraries">Libraries</a></li>
+<li><a class="reference internal" href="#i18n-of-hello-world">I18N of “Hello World”</a><ul>
+<li><a class="reference internal" href="#non-i18n-hellworld-c">Non i18n hellworld.c</a></li>
+<li><a class="reference internal" href="#internationalized-helloworld-c">Internationalized helloworld.c</a><ul>
+<li><a class="reference internal" href="#explainations">Explainations</a><ul>
+<li><a class="reference internal" href="#libintl-h">libintl.h</a></li>
+<li><a class="reference internal" href="#locale-h">locale.h</a></li>
+<li><a class="reference internal" href="#define-string-gettext-string">#define _(String) gettext (String)</a></li>
+<li><a class="reference internal" href="#setlocale-lc-all">setlocale(LC_ALL,”“);</a></li>
+<li><a class="reference internal" href="#bindtextdomain">Bindtextdomain</a></li>
+<li><a class="reference internal" href="#textdomain-helloworld">textdomain(“helloworld”)</a></li>
+<li><a class="reference internal" href="#printf-hello-worldn">printf(_(“Hello Worldn”));</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preparing-po-file">Preparing PO file</a></li>
+<li><a class="reference internal" href="#translations">Translations</a></li>
+<li><a class="reference internal" href="#execution-of-program">Execution of program</a><ul>
+<li><a class="reference internal" href="#creating-mo-file-from-po-file">Creating .mo file from .po file</a><ul>
+<li><a class="reference internal" href="#mo-machine-object-file">MO - Machine Object file</a></li>
+<li><a class="reference internal" href="#placing-mo-file-in-folder">Placing .mo file in folder</a></li>
+<li><a class="reference internal" href="#demonstration-of-application">Demonstration of application</a></li>
+<li><a class="reference internal" href="#automation-for-i18n">Automation for i18n</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="l10n-string-extraction-frameworks.html" title="previous chapter">L10N string extraction frameworks</a></li>
+      <li>Next: <a href="i18n-of-python-application.html" title="next chapter">I18N of Python Application</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/i18n-of-c-application.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Pravin Satpute.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/i18n-of-c-application.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
